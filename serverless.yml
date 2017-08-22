@@ -4,6 +4,10 @@ service: shifty-auth
 # Check out our docs for more details
 # frameworkVersion: "=X.X.X"
 
+package:
+  include:
+    - dynamo-helper.js
+    - handler.js
 provider:
   name: aws
   runtime: nodejs6.10
