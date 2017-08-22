@@ -1,0 +1,24 @@
+{
+  "name": "shifty-auth",
+  "version": "1.0.0",
+  "description": "Authentication logic for Shifty ",
+  "main": "handler.js",
+  "dependencies": {
+    "bcrypt": "^1.0.2",
+    "jsonwebtoken": "^7.4.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rdugue/Shifty-Auth.git"
+  },
+  "author": "Ralph Dugue",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rdugue/Shifty-Auth/issues"
+  },
+  "homepage": "https://github.com/rdugue/Shifty-Auth#readme"
+}

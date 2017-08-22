@@ -1,7 +1,7 @@
 'use strict';
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-import { DynamoHelper } from './dynamo-helper'
+const database = require('./dynamo-helper')
 
 const response = {
   statusCode: 200,
@@ -16,7 +16,7 @@ const response = {
 };
 const JWT_SECRET = process.env.JWT_SECRET
 const JWT_ALGORITHM = [process.env.JWT_ALGORITHM]
-const helper = new DynamoHelper()
+const helper = new database.DynamoHelper()
 
 module.exports.register = (event, context, callback) => {
   if (event.body) {
