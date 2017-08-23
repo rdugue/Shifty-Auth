@@ -1,5 +1,7 @@
+const slsw = require('serverless-webpack');
+
 module.exports = {
-  entry: './handler.js',
+  entry: slsw.lib.entries,
   target: 'node',
   module: {
     loaders: [{
