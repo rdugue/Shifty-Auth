@@ -4,7 +4,6 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.js$/,
-      exclude: /node_modules/,
       loaders: ['shebang-loader', 'babel-loader'],
       include: __dirname
     }]
