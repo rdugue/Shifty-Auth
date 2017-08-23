@@ -2,8 +2,10 @@
 const AWS = require('aws-sdk')
 
 export class DynamoHelper {
-    docClient = new AWS.DynamoDB.DocumentClient()
-    table = "Users"
+    constructor() {
+        this.docClient = new AWS.DynamoDB.DocumentClient()
+        this.table = "Users"
+    }
     createUser(user) {
         const params = {
             TableName: this.table,
