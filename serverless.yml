@@ -5,6 +5,7 @@ service: shifty-auth
 # frameworkVersion: "=X.X.X"
 
 package:
+  excludeDevDependencies: false
   include:
     - dynamo-helper.js
     - handler.js
