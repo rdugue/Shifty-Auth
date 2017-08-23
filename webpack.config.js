@@ -5,7 +5,7 @@ module.exports = {
     loaders: [{
       test: /\.js$/,
       exclude: /node_modules/,
-      include: /node_modules\/rc\/index.js/,
+      include: /node_modules\/rc\/index\.js/,
       loaders: ['shebang-loader', 'babel-loader'],
       include: __dirname
     }]
