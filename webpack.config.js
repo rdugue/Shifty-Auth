@@ -4,9 +4,8 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.js$/,
-      loaders: ['babel-loader'],
-      include: __dirname,
-      exclude: /node_modules/,
+      loader: 'babel-loader',
+      exclude: /node_modules/
     }]
   }
 };
