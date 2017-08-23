@@ -20,7 +20,8 @@
     "babel-preset-stage-0": "^6.24.1",
     "serverless-webpack": "^2.2.1",
     "shebang-loader": "0.0.1",
-    "webpack": "^3.5.5"
+    "webpack": "^3.5.5",
+    "webpack-node-externals": "^1.6.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

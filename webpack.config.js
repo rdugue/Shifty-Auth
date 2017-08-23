@@ -1,17 +1,16 @@
-var path = require('path')
+var nodeExternals = require('webpack-node-externals')
 
 module.exports = {
   entry: './handler.js',
   target: 'node',
+  externals: [nodeExternals({
+    whitelist: ['rc']
+  })],
   module: {
     loaders: [{
       test: /\.js$/,
-      exclude: /node_modules/,
       loaders: ['shebang-loader', 'babel-loader'],
-      include: [
-        __dirname,
-        path.resolve(__dirname, 'node_modules/rc')
-      ]
+      include: __dirname
     }]
   }
 };
