@@ -10,7 +10,7 @@ const response = {
   }),
   headers: {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Credentials': True,
+    'Access-Control-Allow-Credentials': true,
     'Content-Type': 'application/json'
   }
 };
