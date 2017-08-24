@@ -9,7 +9,6 @@ module.exports = {
     path: path.join(__dirname, '.webpack'),
     filename: 'handler.js'
   },
-  devtool: 'hidden-source-map',
   externals: [nodeExternals({
     whitelist: ['rc']
   })],
