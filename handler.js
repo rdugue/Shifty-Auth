@@ -1,5 +1,5 @@
 'use strict';
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 import { DynamoHelper } from './dynamo-helper'
 
@@ -26,27 +26,40 @@ module.exports.register = (event, context, callback) => {
     response.body = JSON.stringify({ error: 'No POST body.' })
     callback(response)
   }
-  bcrypt.hash(user.password, 10)
-  .then(hash => {
-    user.password = hash
-    return helper.createUser(user)
-  })
-  .then(item => {
-    const tokenData = {
-      userId: item.userId,
-      position: item.position,
-      company: item.company
+  bcrypt.genSalt(10, (error, salt) => {
+    if (error) {
+      response.statusCode = 400
+      response.body =  JSON.stringify({ error: error })
+      callback(response)
+    } else {
+      bcrypt.hash(user.password, salt, (err, hash) => {
+        if (err) {
+          response.statusCode = 400
+          response.body =  JSON.stringify({ error: err })
+          callback(response)
+        } else {
+          user.password = hash
+          helper.createUser(user)
+          .then(item => {
+            const tokenData = {
+              userId: item.userId,
+              position: item.position,
+              company: item.company
+            }
+            response.body = JSON.stringify({
+              data: item,
+              token: jwt.sign(tokenData, JWT_SECRET, JWT_ALGORITHM)
+            })
+            callback(null, response)
+          })
+          .catch(reason => {
+            response.statusCode = 400
+            response.body = JSON.stringify({ error: reason })
+            callback(response)
+          })
+        }
+      })
     }
-    response.body = JSON.stringify({
-      data: item,
-      token: jwt.sign(tokenData, JWT_SECRET, JWT_ALGORITHM)
-    })
-    callback(null, response)
-  })
-  .catch(reason => {
-    response.statusCode = 400
-    response.body = JSON.stringify({ error: reason })
-    callback(response)
   })
 };
 
