@@ -4,12 +4,9 @@ service: shifty-auth
 # Check out our docs for more details
 # frameworkVersion: "=X.X.X"
 
-package:
-  excludeDevDependencies: false
-  include:
-    - dynamo-helper.js
-    - handler.js
-    - node_module/**
+custom:
+  webpackIncludeModules: true # enable auto-packing of external modules
+  
 provider:
   name: aws
   runtime: nodejs6.10
