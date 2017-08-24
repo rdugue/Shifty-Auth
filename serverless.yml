@@ -9,6 +9,7 @@ package:
   include:
     - dynamo-helper.js
     - handler.js
+    - node_module/**
 provider:
   name: aws
   runtime: nodejs6.10
