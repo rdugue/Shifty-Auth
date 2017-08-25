@@ -15,11 +15,12 @@ export class DynamoHelper {
         return this.docClient.put(params).promise()
     }
 
-    getUser(id) {
+    getUser(id, company) {
         const params = {
             TableName: this.table,
             Key: {
-                "userId": id
+                "userId": id,
+                "company": company
             }
         }
         return this.docClient.get(params).promise()

@@ -71,7 +71,7 @@ module.exports.login = (event, context, callback) => {
     response.body = JSON.stringify({ error: 'No POST body.' })
     callback(response)
   }
-  helper.getUser(user.userId)
+  helper.getUser(user.userId, user.company)
   .then(item => {
     return bcrypt.compare(user.password, item.Item.password)
   })
