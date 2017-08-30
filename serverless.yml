@@ -13,7 +13,7 @@ provider:
   environment:
     JWT_SECRET: secret
     JWT_ALGORITHM: HS256
-    USER_TABLE: Users
+    USER_TABLE: User
   iamRoleStatements:
     - Effect: Allow
       Action:
