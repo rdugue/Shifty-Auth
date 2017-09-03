@@ -110,7 +110,7 @@ module.exports.login = (event, context, callback) => {
       callback(null, response)
     })
   } else {
-    response.body = 400
+    response.statusCode = 400
     response.body = JSON.stringify({
       error: 'No POST body.'
     })
