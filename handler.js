@@ -47,13 +47,23 @@ module.exports.register = (event, context, callback) => {
                 callback(null, response)
               })
             })
-            .catch(reason => callback(new Error(reason)))
+            .catch(reason => {
+              response.statusCode = 400
+              response.body = JSON.stringify({
+                error: reason
+              })
+              callback(null, response)
+            })
           }
         })
       }
     })
   } else {
-    callback(new Error('No POST body.'))
+    response.statusCode = 400
+    response.body = JSON.stringify({
+      error: 'No POST body.'
+    })
+    callback(null, response)
   }
 };
 
@@ -85,12 +95,26 @@ module.exports.login = (event, context, callback) => {
           callback(null, response)
         })
       } else {
-        callback(new Error('Invalid credentials'))
+        response.statusCode = 400
+        response.body = JSON.stringify({
+          error: 'Invalid credentials'
+        })
+        callback(null, response)
       }
     })
-    .catch(reason => callback(new Error(reason)))
+    .catch(reason => {
+      response.statusCode = 400
+      response.body = JSON.stringify({
+        error: reason
+      })
+      callback(null, response)
+    })
   } else {
-    callback(new Error('No POST body.'))
+    response.statusCode = 400
+    response.body = JSON.stringify({
+      error: 'No POST body.'
+    })
+    callback(null, response)
   }
 }
 
