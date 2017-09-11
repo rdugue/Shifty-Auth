@@ -25,4 +25,17 @@ export class DynamoHelper {
         }
         return this.docClient.get(params).promise()
     }
+    getAllUsers(company) {
+        const params = {
+            TableName: this.table,
+            FilterExpression: "#cp = :company",
+            ExpressionAttributeNames: {
+                "#cp": "company"
+            },
+            ExpressionAttributeValues: {
+                ":company": company
+            }
+        }
+        return this.docClient.scan(params).promise()
+    }
 }
