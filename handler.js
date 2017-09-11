@@ -20,39 +20,50 @@ const helper = new DynamoHelper()
 module.exports.register = (event, context, callback) => {
   if (event.body) {
     let user = JSON.parse(event.body)
-    bcrypt.genSalt(10, (error, salt) => {
-      if (error) {
-        callback(new Error(`salting error - ${error}`))
+    helper.getAllUsers(user.company)
+    .then(res => {
+      if (res.Count > 0) {
+        response.statusCode = 400
+        response.body = JSON.stringify({
+          error: "Company Id taken"
+        })
+        callback(null, response)
       } else {
-        bcrypt.hash(user.password, salt, (err, hash) => {
-          if (err) {
-            callback(new Error(`hashing error - ${err}`))
+        bcrypt.genSalt(10, (error, salt) => {
+          if (error) {
+            callback(new Error(`salting error - ${error}`))
           } else {
-            user.password = hash
-            helper.createUser(user)
-            .then(item => {
-              const tokenData = {
-                userId: item.Attributes.userId,
-                position: item.Attributes.position,
-                company: item.Attributes.company
-              }
-              jwt.sign(tokenData, JWT_SECRET, { algorithm: JWT_ALGORITHM }, (error, token) => {
-                if (error) {
-                  callback(new Error(`token signing error - ${error}`))
-                } 
-                response.body = JSON.stringify({
-                  data: item.Attributes,
-                  token: token
+            bcrypt.hash(user.password, salt, (err, hash) => {
+              if (err) {
+                callback(new Error(`hashing error - ${err}`))
+              } else {
+                user.password = hash
+                helper.createUser(user)
+                .then(item => {
+                  const tokenData = {
+                    userId: item.Attributes.userId,
+                    position: item.Attributes.position,
+                    company: item.Attributes.company
+                  }
+                  jwt.sign(tokenData, JWT_SECRET, { algorithm: JWT_ALGORITHM }, (error, token) => {
+                    if (error) {
+                      callback(new Error(`token signing error - ${error}`))
+                    } 
+                    response.body = JSON.stringify({
+                      data: item.Attributes,
+                      token: token
+                    })
+                    callback(null, response)
+                  })
                 })
-                callback(null, response)
-              })
-            })
-            .catch(reason => {
-              response.statusCode = 400
-              response.body = JSON.stringify({
-                error: reason
-              })
-              callback(null, response)
+                .catch(reason => {
+                  response.statusCode = 400
+                  response.body = JSON.stringify({
+                    error: reason
+                  })
+                  callback(null, response)
+                })
+              }
             })
           }
         })
