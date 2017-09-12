@@ -69,6 +69,13 @@ module.exports.register = (event, context, callback) => {
         })
       }
     })
+    .catch(reason => {
+      response.statusCode = 400
+      response.body = JSON.stringify({
+        error: reason
+      })
+      callback(null, response)
+    })
   } else {
     response.statusCode = 400
     response.body = JSON.stringify({
